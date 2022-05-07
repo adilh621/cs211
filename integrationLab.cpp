@@ -1,67 +1,39 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-template <class T>
-void printVector(vector<T> v){
-  for(int i = 0; i < v.size(); i++){
-    cout << v[i] << " ";
-  }
-  cout << endl;
+
+// examples using function pointers
+
+typedef int (*intPtr)(int a, int b);
+typedef bool (*boolPtr)(int a);
+
+int sum (int a, int b){
+    return a+b;
 }
 
-double getAverage(vector<double> v){
-    double sum = 0;
-    for(int i = 0; i < v.size() ; i++){
+int plusFive(intPtr fp, int a, int b){
+    return fp(a,b)+5;
+}
 
-        sum += v[i];
+bool isEven(int a){
+    return a%2 == 0;
+}
+bool isOdd(int a){
+    return a%2 != 0;
+}
+bool numIsEven(boolPtr fp, int a){
+    if(fp(a)){
+        cout << "num is even" << endl;
     }
-    return (sum)/(v.size());
-}
-
-double highestGrade(vector<double> v){
-    for(int i = 0 ; i < v.size() ; i++){
-
-        if(v[i] > v[i+1]){
-            return v[i];
-        }
-        
+    else{
+        cout << "suuply an even num pls" <<endl;
     }
 }
 
-double lowestGrade(vector<double> v){
 
-    int temp = v[0];
-    for(int i = 0; i != v.size(); ++i)
-    {
-        if(v[i] < temp)
-        temp = v[i];
-    }
-    return temp;
-}
-
-int main(){
-
-    // ask user to input grades in a vector 
-    // keep accepting grades until user enters -1
-    // highest, lowest, avg
-    
-    vector <double> midterm;
-    double grade;
-    do {
-        cout <<  "Enter midterm grades" << endl;
-        cin >> grade;
-
-        midterm.push_back(grade);
-
-    } while(grade != -1);
-
-    midterm.pop_back();
-
-    cout << "Avg grade: " << getAverage(midterm) << endl;
-    cout << "Highest grade: " << highestGrade(midterm) << endl;
-    cout << "Lowest grade: " << lowestGrade(midterm) << endl;
-
-    
+int main()
+{
+    boolPtr ptr = &isEven;
+    cout << numIsEven(isEven,23) << endl;
 
 }
